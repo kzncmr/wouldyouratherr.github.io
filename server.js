@@ -3,6 +3,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 
 const app = express();
 const adapter = new FileSync('db.json');
@@ -1319,6 +1320,9 @@ syncQuestionsWithDB();
 
 app.use(cors());
 app.use(express.json());
+
+// Statik dosyaları serve et (index.html ana dizindeyse)
+app.use(express.static(path.join(__dirname, '.')));
 
 // Tüm soruları getir
 app.get('/questions', (req, res) => {
